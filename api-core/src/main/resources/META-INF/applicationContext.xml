@@ -9,7 +9,5 @@
   
   <context:annotation-config/>
   <context:component-scan base-package="es.qc.api.apicore"/>
-  
-  
 
 </beans>
