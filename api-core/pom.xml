@@ -16,10 +16,20 @@
     <properties>
     	<project.version>0.0.1-SNAPSHOT</project.version>
     	<project.artifactId>api-core</project.artifactId>
-        <java.version>17</java.version>
-        <spring-cloud.version>2021.0.3</spring-cloud.version>
-        <spring-boot.version>2.6.0</spring-boot.version>
+        <java.version>1.8</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <springfox-version>2.8.0</springfox-version>
+   		<spring-cloud.version>2020.0.4</spring-cloud.version>
+   		<spring-boot.version>2.6.0</spring-boot.version>
         <output.base.directory>d:/eclipse-workspace</output.base.directory>
+        <springfox-version>2.8.0</springfox-version>
+        <swagger-core-version>1.5.15</swagger-core-version>
+        <okhttp-version>4.9.0</okhttp-version>
+        <gson-version>2.6.1</gson-version>
+        <jodatime-version>2.10.13</jodatime-version>
+        <start-class>es.qc.api.apicore.ApiCoreApplication</start-class>
+		<jackson.version>2.13.3</jackson.version>
     </properties>
     
     <profiles>
@@ -57,10 +67,12 @@
             <artifactId>javax.inject</artifactId>
             <version>1</version>
         </dependency>
+        <!-- 
          <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-gateway</artifactId>
         </dependency>
+         -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-actuator</artifactId>
@@ -73,6 +85,101 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${springfox-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${springfox-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-joda</artifactId>
+        </dependency>
+    <!-- Bean Validation API support -->
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+        </dependency>
+        <dependency>
+	      <groupId>io.swagger</groupId>
+	      <artifactId>swagger-annotations</artifactId>
+	      <version>${swagger-core-version}</version>
+	    </dependency>
+	    <dependency>
+	      <groupId>com.squareup.okhttp3</groupId>
+	      <artifactId>okhttp</artifactId>
+	      <version>${okhttp-version}</version>
+	    </dependency>
+	    <dependency>
+	      <groupId>com.squareup.okhttp3</groupId>
+	      <artifactId>logging-interceptor</artifactId>
+	      <version>${okhttp-version}</version>
+	    </dependency>
+	    <dependency>
+	      <groupId>com.google.code.gson</groupId>
+	      <artifactId>gson</artifactId>
+	      <version>${gson-version}</version>
+	    </dependency>
+	
+	    <dependency>
+	      <groupId>joda-time</groupId>
+	      <artifactId>joda-time</artifactId>
+	      <version>${jodatime-version}</version>
+	    </dependency>
+		
+	<dependency>
+	    <groupId>com.fasterxml.jackson.core</groupId>
+	    <artifactId>jackson-annotations</artifactId>
+	    <version>${jackson.version}</version>
+	</dependency>
+
+	<dependency>
+	    <groupId>com.fasterxml.jackson.core</groupId>
+	    <artifactId>jackson-core</artifactId>
+	    <version>${jackson.version}</version>
+	</dependency>
+	
+	<dependency>
+	    <groupId>com.fasterxml.jackson.core</groupId>
+	    <artifactId>jackson-databind</artifactId>
+	    <version>${jackson.version}</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.openapitools</groupId>
+	    <artifactId>jackson-databind-nullable</artifactId>
+	    <version>0.2.1</version>
+	</dependency>
+	<dependency>
+	    <groupId>io.swagger.core.v3</groupId>
+	    <artifactId>swagger-annotations</artifactId>
+	    <version>2.1.10</version>
+	</dependency>
+	<dependency>
+	    <groupId>com.fasterxml.jackson.dataformat</groupId>
+	    <artifactId>jackson-dataformat-yaml</artifactId>
+	    <version>${jackson.version}</version>
+	</dependency>
+	
+    <dependency>
+      <groupId>javax.validation</groupId>
+      <artifactId>validation-api</artifactId>
+      <type>jar</type>
+      <version>1.1.0.Final</version>
+    </dependency>
+    <dependency>
+        <groupId>javax.xml.bind</groupId>
+        <artifactId>jaxb-api</artifactId>
+        <version>2.3.0</version>
+    </dependency>    
+        
     </dependencies>
     <dependencyManagement>
         <dependencies>
@@ -95,9 +202,57 @@
 
     <build>
         <plugins>
+        	 <!-- activate the plugin -->
+            <plugin>
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <version>5.4.0</version>
+                <executions>
+                    <execution>
+                        <id>default</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <!-- specify the swagger yaml -->
+                            <inputSpec>${project.basedir}/src/main/resources/api.yaml</inputSpec>
+                   
+                            <!-- target to generate java client code -->
+                            <generatorName>spring</generatorName>
+
+                            <!-- hint: if you want to generate java server code, e.g. based on Spring Boot,
+                                 you can use the following target: <generatorName>spring</generatorName> -->
+
+                            <!-- pass any necessary config options -->
+                            <configOptions>
+                                <dateLibrary>joda</dateLibrary>
+                                <delegatePattern>true</delegatePattern>
+                                <sourceFolder>src/gen/java</sourceFolder>
+				                <java8>true</java8>
+				                <interfaceOnly>false</interfaceOnly>
+				                <performBeanValiation>true</performBeanValiation>
+				                <openApiNullable>false</openApiNullable>
+                            </configOptions>
+
+                            <!-- library template (sub-template) to use. Set default value -->
+                            <library>spring-boot</library>
+                            
+                            <output>${project.basedir}</output>
+                            <apiPackage>es.qc.api.apicore</apiPackage>
+                            <modelPackage>es.qc.api.apicore.model</modelPackage>
+                            <invokerPackage>es.qc.api.client</invokerPackage>
+                        </configuration>
+                    </execution>
+                     
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>    
+			        <mainClass>${start-class}</mainClass>
+			    </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -138,6 +293,31 @@
                   </checkstyleRules>
                 </configuration>
             </plugin>
+            <plugin>
+	            <groupId>org.apache.maven.plugins</groupId>
+	            <artifactId>maven-resources-plugin</artifactId>
+	            <version>3.1.0</version>
+	        </plugin>
+	        <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.2.0</version>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                            	<source>src/main/java/</source>
+                                <source>src/gen/java/</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
         <resources>
             <resource>
@@ -145,7 +325,7 @@
                 <filtering>true</filtering>
             </resource>
         </resources>
-        <outputDirectory>${output.base.directory}/${artifactId}/target</outputDirectory>
+        <!-- <outputDirectory>${output.base.directory}/${artifactId}/target</outputDirectory> -->
     </build>
 
 </project>
