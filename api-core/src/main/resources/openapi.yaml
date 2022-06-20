@@ -1,0 +1,917 @@
+openapi: 3.0.0
+info:
+  description: Impact on the world made by the customers investments.
+  title: Impact
+  version: v3
+servers:
+- description: Local development
+  url: http://localhost:8080/banking
+- description: UAT server
+  url: https://api-uat-regular.triodos.com/banking
+- description: Production server
+  url: https://api.triodos.com/banking
+tags:
+- description: Operations that relate to how much positive impact a user makes.
+  name: impact
+paths:
+  /impact/balancebased/funds:
+    post:
+      description: Provide list of funds and accompanying shares for which to fetch
+        impact data for the customer
+      operationId: post-investment-impact
+      requestBody:
+        content:
+          application/json:
+            example:
+              requestedFundsWithShares:
+              - fundID: TPIF
+                numberOfShares: 1
+              - fundID: SAAT
+                numberOfShares: 1
+              - fundID: TFTEF
+                numberOfShares: 1
+            schema:
+              $ref: '#/components/schemas/InvestmentImpactRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                impactAggregate:
+                  impactmetrics:
+                  - metric: MEALS
+                    amount: 311.132
+                    unit: QUANTITY
+                  - metric: CULTURAL_VISITORS
+                    amount: 215
+                    unit: QUANTITY
+                  - metric: PERSONS_EDUCATED
+                    amount: 5.5
+                    unit: QUANTITY
+                  - metric: MFI_LOANS
+                    amount: 159.167
+                    unit: QUANTITY
+                  - metric: CO2
+                    amount: 2.943
+                    unit: KG
+                    equivalenceAmount: 27.767
+                    equivalenceUnit: KM_OF_DRIVING
+                  - metric: WATER
+                    amount: 0.417
+                    unit: LITER
+                    equivalenceAmount: 6.654
+                    equivalenceUnit: SHOWER_SESSIONS
+                  - metric: WASTE
+                    amount: 0.565
+                    unit: KG
+                    equivalenceAmount: 0.057
+                    equivalenceUnit: BAGS
+                  sustainableDevelopmentGoals:
+                  - 1
+                  - 3
+                  - 5
+                  - 6
+                  - 7
+                  - 9
+                  - 11
+                  - 15
+                  - 17
+                  tiles:
+                  - templateID: METRIC_WORDING_WITHOUT_EQUIVALENCE
+                    content:
+                      measurement: "311"
+                      measurementDescription: organic meals
+                      measurementIcon:
+                        pdf: impact-organicmeals.pdf
+                        png: impact-organicmeals-512.png
+                        svg: impact-organicmeals.svg
+                  - templateID: METRIC_WORDING_WITHOUT_EQUIVALENCE
+                    content:
+                      measurement: "215"
+                      measurementDescription: cultural visits made possible
+                      measurementIcon:
+                        pdf: impact-culture.pdf
+                        png: impact-culture-512.png
+                        svg: impact-culture.svg
+                  - templateID: METRIC_WORDING_WITHOUT_EQUIVALENCE
+                    content:
+                      measurement: "6"
+                      measurementDescription: educational programmes
+                      measurementIcon:
+                        pdf: impact-education.pdf
+                        png: impact-education-512.png
+                        svg: impact-education.svg
+                  - templateID: METRIC_WORDING_WITHOUT_EQUIVALENCE
+                    content:
+                      measurement: "159"
+                      measurementDescription: microloans
+                      measurementIcon:
+                        pdf: impact-mfi.pdf
+                        png: impact-mfi-512.png
+                        svg: impact-mfi.svg
+                  - templateID: METRIC_WORDING_WITH_EQUIVALENCE
+                    content:
+                      measurement: 2,943 kg
+                      measurementDescription: CO₂ avoided
+                      measurementEquivalence: Equivalent to driving 17,254 miles
+                      measurementIcon:
+                        pdf: impact-co2.pdf
+                        png: impact-co2-512.png
+                        svg: impact-co2.svg
+                  - templateID: METRIC_WORDING_WITH_EQUIVALENCE
+                    content:
+                      measurement: < 1 litres
+                      measurementDescription: water saved
+                      measurementEquivalence: Equivalent to 7 showers
+                      measurementIcon:
+                        pdf: impact-water.pdf
+                        png: impact-water-512.png
+                        svg: impact-water.svg
+                  - templateID: METRIC_WORDING_WITH_EQUIVALENCE
+                    content:
+                      measurement: < 1 kg
+                      measurementDescription: waste prevented
+                      measurementEquivalence: Equivalent to < 1 bin bags
+                      measurementIcon:
+                        pdf: impact-waste.pdf
+                        png: impact-waste-512.png
+                        svg: impact-waste.svg
+                  - templateID: EXPLANATION
+                    content:
+                      explanationLinkText: How is the measured and what does it mean?
+                      explanationLinkURL: https://acc-app-uk.triodos.eu/helptexts/impact-calculations-investing
+                  - templateID: INSUFFICIENT_SHARES
+                    content:
+                      insufficientSharesContent: Your impact falls below the minimal
+                        value.
+                      insufficientSharesLinkText: Learn more
+                      insufficientSharesLinkURL: https://acc-app-uk.triodos.eu/helptexts/impact-calculations-investing
+                  - templateID: SAAT
+                    content:
+                      saatContent: By investing in the Triodos Group, you better the
+                        world through all our financial services.
+                      saatLinkText: View Integrated Annual Report 2020
+                      saatLinkURL: https://www.annual-report-triodos.com/2020/
+                      saatIcon:
+                        pdf: impact-saat.pdf
+                        png: impact-saat-512.png
+                        svg: impact-saat.svg
+                  - templateID: ERROR
+                    content:
+                      errorContent: It seems a problem occured while loading your
+                        impact information. Please check back later.
+                impactPerFund:
+                - fundInfo:
+                    fundID: TPIF
+                    fundName: Triodos Pioneer Investment Fund
+                  impactmetrics:
+                  - metric: CO2
+                    amount: 2.943
+                    unit: KG
+                    equivalenceAmount: 27.767
+                    equivalenceUnit: KM_OF_DRIVING
+                  - metric: WATER
+                    amount: 0.417
+                    unit: LITER
+                    equivalenceAmount: 6.654
+                    equivalenceUnit: SHOWER_SESSIONS
+                  - metric: WASTE
+                    amount: 0.565
+                    unit: KG
+                    equivalenceAmount: 0.057
+                    equivalenceUnit: BAGS
+                  sustainableDevelopmentGoals:
+                  - 1
+                  - 5
+                  - 6
+                  - 7
+                  - 11
+                  tiles:
+                  - templateID: METRIC_WORDING_WITH_EQUIVALENCE
+                    content:
+                      measurement: 2,943 kg
+                      measurementDescription: CO₂ avoided
+                      measurementEquivalence: Equivalent to driving 17,254 miles
+                      measurementIcon:
+                        pdf: impact-co2.pdf
+                        png: impact-co2-512.png
+                        svg: impact-co2.svg
+                  - templateID: METRIC_WORDING_WITH_EQUIVALENCE
+                    content:
+                      measurement: < 1 litres
+                      measurementDescription: water saved
+                      measurementEquivalence: Equivalent to 7 showers
+                      measurementIcon:
+                        pdf: impact-water.pdf
+                        png: impact-water-512.png
+                        svg: impact-water.svg
+                  - templateID: METRIC_WORDING_WITH_EQUIVALENCE
+                    content:
+                      measurement: < 1 kg
+                      measurementDescription: waste prevented
+                      measurementEquivalence: Equivalent to < 1 bin bags
+                      measurementIcon:
+                        pdf: impact-waste.pdf
+                        png: impact-waste-512.png
+                        svg: impact-waste.svg
+                - fundInfo:
+                    fundID: TFTEF
+                    fundName: Triodos Food Transition Europe Fund
+                  impactmetrics:
+                  - metric: MEALS
+                    amount: 52.799
+                    unit: QUANTITY
+                  sustainableDevelopmentGoals:
+                  - 3
+                  - 6
+                  - 9
+                  - 15
+                  tiles:
+                  - templateID: METRIC_WORDING_WITHOUT_EQUIVALENCE
+                    content:
+                      measurement: "53"
+                      measurementDescription: organic meals
+                      measurementIcon:
+                        pdf: impact-organicmeals.pdf
+                        png: impact-organicmeals-512.png
+                        svg: impact-organicmeals.svg
+                - fundInfo:
+                    fundID: SAAT
+                    fundName: Triodos Bank Depository Receipts
+                  impactmetrics:
+                  - metric: MEALS
+                    amount: 258.333
+                    unit: QUANTITY
+                  - metric: CULTURAL_VISITORS
+                    amount: 215
+                    unit: QUANTITY
+                  - metric: PERSONS_EDUCATED
+                    amount: 5.5
+                    unit: QUANTITY
+                  - metric: MFI_LOANS
+                    amount: 159.167
+                    unit: QUANTITY
+                  sustainableDevelopmentGoals:
+                  - 3
+                  - 6
+                  - 9
+                  - 17
+                  tiles:
+                  - templateID: METRIC_WORDING_WITHOUT_EQUIVALENCE
+                    content:
+                      measurement: "258"
+                      measurementDescription: organic meals
+                      measurementIcon:
+                        pdf: impact-organicmeals.pdf
+                        png: impact-organicmeals-512.png
+                        svg: impact-organicmeals.svg
+                  - templateID: METRIC_WORDING_WITHOUT_EQUIVALENCE
+                    content:
+                      measurement: "215"
+                      measurementDescription: cultural visits made possible
+                      measurementIcon:
+                        pdf: impact-culture.pdf
+                        png: impact-culture-512.png
+                        svg: impact-culture.svg
+                  - templateID: METRIC_WORDING_WITHOUT_EQUIVALENCE
+                    content:
+                      measurement: "6"
+                      measurementDescription: educational programmes
+                      measurementIcon:
+                        pdf: impact-education.pdf
+                        png: impact-education-512.png
+                        svg: impact-education.svg
+                  - templateID: METRIC_WORDING_WITHOUT_EQUIVALENCE
+                    content:
+                      measurement: "159"
+                      measurementDescription: microloans
+                      measurementIcon:
+                        pdf: impact-mfi.pdf
+                        png: impact-mfi-512.png
+                        svg: impact-mfi.svg
+                dataSource: 'Fund KVM database from: https://acc-fund-data-api.triodos.eu/graphql'
+              schema:
+                $ref: '#/components/schemas/InvestmentImpactResponse'
+          description: Sum of the impact of investing numberOfShares shares per fund
+            in the given funds
+        default:
+          content:
+            application/json:
+              examples:
+                "400":
+                  externalValue: ../common/examples/error/bad-request-error-400.json
+                "401":
+                  externalValue: ../common/examples/error/unauthorized-error-401.json
+                "404":
+                  externalValue: ../common/examples/error/not-found-error-404.json
+                "500":
+                  externalValue: ../common/examples/error/internal-server-error-500.json
+                client-outdated:
+                  externalValue: ../common/examples/error/bad-request-error-400-client-outdated.json
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error response
+      tags:
+      - impact
+      x-triodos-als:
+        identified: false
+        authenticated: false
+        signed: false
+      x-contentType: application/json
+      x-accepts: application/json
+      x-tags:
+      - tag: impact
+  /impact/balancebased/savings:
+    get:
+      description: Get the impact the customer makes by having ``amount`` of euros
+        in their savings account
+      operationId: get-savings-impact
+      parameters:
+      - description: The amount in the savings account in euros
+        explode: true
+        in: query
+        name: amount
+        required: true
+        schema:
+          format: double
+          type: number
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                impactmetrics:
+                - metric: CO2
+                  amount: 2.943
+                  unit: KG
+                  equivalenceAmount: 27.767
+                  equivalenceUnit: KM_OF_DRIVING
+                - metric: MEALS
+                  amount: 0.58
+                  unit: QUANTITY
+                - metric: SUSTAINABLE_PROPERTY
+                  amount: 8
+                  unit: SQUARE_METRE
+                tiles:
+                - templateID: METRIC_WORDING_WITH_EQUIVALENCE
+                  content:
+                    measurement: 2,943 kg
+                    measurementDescription: CO₂ avoided
+                    measurementEquivalence: Equivalent to driving 17,254 miles
+                    measurementIcon:
+                      pdf: impact-co2.pdf
+                      png: impact-co2-512.png
+                      svg: impact-co2.svg
+                - templateID: METRIC_WORDING_WITHOUT_EQUIVALENCE
+                  content:
+                    measurement: < 1
+                    measurementDescription: organic meals
+                    measurementIcon:
+                      pdf: impact-organicmeals.pdf
+                      png: impact-organicmeals-512.png
+                      svg: impact-organicmeals.svg
+                - templateID: METRIC_WORDING_WITHOUT_EQUIVALENCE
+                  content:
+                    measurement: 8 m²
+                    measurementDescription: sustainable commercial property
+                    measurementIcon:
+                      pdf: impact-property.pdf
+                      png: impact-property-512.png
+                      svg: impact-property.svg
+                dataSource: 'Fund KVM database from: https://acc-fund-data-api.triodos.eu/graphql'
+              schema:
+                $ref: '#/components/schemas/SavingsImpactResponse'
+          description: Impact of having ``amount`` of euros in a savings account
+        default:
+          content:
+            application/json:
+              examples:
+                "400":
+                  externalValue: ../common/examples/error/bad-request-error-400.json
+                "401":
+                  externalValue: ../common/examples/error/unauthorized-error-401.json
+                "404":
+                  externalValue: ../common/examples/error/not-found-error-404.json
+                "500":
+                  externalValue: ../common/examples/error/internal-server-error-500.json
+                client-outdated:
+                  externalValue: ../common/examples/error/bad-request-error-400-client-outdated.json
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error response
+      tags:
+      - impact
+      x-triodos-als:
+        identified: false
+        authenticated: false
+        signed: false
+      x-accepts: application/json
+      x-tags:
+      - tag: impact
+components:
+  schemas:
+    InvestmentImpactRequest:
+      description: List consisting of funds for which the impact is requested along
+        with their number of shares
+      example:
+        requestedFundsWithShares:
+        - fundID: fundID
+          numberOfShares: 0.08008281904610115
+        - fundID: fundID
+          numberOfShares: 0.08008281904610115
+      properties:
+        requestedFundsWithShares:
+          description: List of requested funds and number of shares for each fund
+          items:
+            $ref: '#/components/schemas/FundWithShares'
+          type: array
+      type: object
+    FundWithShares:
+      description: A single fund with the number of shares owned
+      example:
+        fundID: fundID
+        numberOfShares: 0.08008281904610115
+      properties:
+        fundID:
+          description: Fund identifier
+          minLength: 1
+          type: string
+        numberOfShares:
+          description: The number of shares the customer holds of the fund with id
+            ``fundID``.
+          exclusiveMinimum: true
+          format: double
+          minimum: 0
+          type: number
+      type: object
+    InvestmentImpactResponse:
+      description: Impact made by user by investing in a list of funds, given per
+        fund, and as a sum
+      example:
+        impactAggregate:
+          tiles:
+          - templateID: METRIC_WORDING_WITHOUT_EQUIVALENCE
+            content:
+              measurementEquivalence: measurementEquivalence
+              measurementDescription: measurementDescription
+              measurementIcon:
+                pdf: pdf
+                svg: svg
+                png: png
+              measurement: measurement
+          - templateID: METRIC_WORDING_WITHOUT_EQUIVALENCE
+            content:
+              measurementEquivalence: measurementEquivalence
+              measurementDescription: measurementDescription
+              measurementIcon:
+                pdf: pdf
+                svg: svg
+                png: png
+              measurement: measurement
+          sdgs:
+            explanationLinkUrl: explanationLinkUrl
+            items:
+            - 10
+            - 10
+          fundInfo:
+            fundID: fundID
+            fundName: fundName
+          impactMetrics:
+          - equivalenceValue: 6.027456183070403
+            unit: KG
+            metric: CO2
+            value: 0.8008281904610115
+            equivalenceUnit: BAGS
+          - equivalenceValue: 6.027456183070403
+            unit: KG
+            metric: CO2
+            value: 0.8008281904610115
+            equivalenceUnit: BAGS
+          sustainableDevelopmentGoals:
+          - 3
+          - 3
+        impactPerFund:
+        - tiles:
+          - templateID: METRIC_WORDING_WITHOUT_EQUIVALENCE
+            content:
+              measurementEquivalence: measurementEquivalence
+              measurementDescription: measurementDescription
+              measurementIcon:
+                pdf: pdf
+                svg: svg
+                png: png
+              measurement: measurement
+          - templateID: METRIC_WORDING_WITHOUT_EQUIVALENCE
+            content:
+              measurementEquivalence: measurementEquivalence
+              measurementDescription: measurementDescription
+              measurementIcon:
+                pdf: pdf
+                svg: svg
+                png: png
+              measurement: measurement
+          sdgs:
+            explanationLinkUrl: explanationLinkUrl
+            items:
+            - 10
+            - 10
+          fundInfo:
+            fundID: fundID
+            fundName: fundName
+          impactMetrics:
+          - equivalenceValue: 6.027456183070403
+            unit: KG
+            metric: CO2
+            value: 0.8008281904610115
+            equivalenceUnit: BAGS
+          - equivalenceValue: 6.027456183070403
+            unit: KG
+            metric: CO2
+            value: 0.8008281904610115
+            equivalenceUnit: BAGS
+          sustainableDevelopmentGoals:
+          - 3
+          - 3
+        - tiles:
+          - templateID: METRIC_WORDING_WITHOUT_EQUIVALENCE
+            content:
+              measurementEquivalence: measurementEquivalence
+              measurementDescription: measurementDescription
+              measurementIcon:
+                pdf: pdf
+                svg: svg
+                png: png
+              measurement: measurement
+          - templateID: METRIC_WORDING_WITHOUT_EQUIVALENCE
+            content:
+              measurementEquivalence: measurementEquivalence
+              measurementDescription: measurementDescription
+              measurementIcon:
+                pdf: pdf
+                svg: svg
+                png: png
+              measurement: measurement
+          sdgs:
+            explanationLinkUrl: explanationLinkUrl
+            items:
+            - 10
+            - 10
+          fundInfo:
+            fundID: fundID
+            fundName: fundName
+          impactMetrics:
+          - equivalenceValue: 6.027456183070403
+            unit: KG
+            metric: CO2
+            value: 0.8008281904610115
+            equivalenceUnit: BAGS
+          - equivalenceValue: 6.027456183070403
+            unit: KG
+            metric: CO2
+            value: 0.8008281904610115
+            equivalenceUnit: BAGS
+          sustainableDevelopmentGoals:
+          - 3
+          - 3
+        dataSource: dataSource
+      properties:
+        impactAggregate:
+          $ref: '#/components/schemas/ImpactValues'
+        impactPerFund:
+          description: List of impact per fund
+          items:
+            $ref: '#/components/schemas/ImpactValues'
+          type: array
+        dataSource:
+          description: Describes the data source used to obtain this data
+          type: string
+      type: object
+    ImpactValues:
+      description: Impact made by user by investing in a single fund or in a list
+        of funds
+      example:
+        tiles:
+        - templateID: METRIC_WORDING_WITHOUT_EQUIVALENCE
+          content:
+            measurementEquivalence: measurementEquivalence
+            measurementDescription: measurementDescription
+            measurementIcon:
+              pdf: pdf
+              svg: svg
+              png: png
+            measurement: measurement
+        - templateID: METRIC_WORDING_WITHOUT_EQUIVALENCE
+          content:
+            measurementEquivalence: measurementEquivalence
+            measurementDescription: measurementDescription
+            measurementIcon:
+              pdf: pdf
+              svg: svg
+              png: png
+            measurement: measurement
+        sdgs:
+          explanationLinkUrl: explanationLinkUrl
+          items:
+          - 10
+          - 10
+        fundInfo:
+          fundID: fundID
+          fundName: fundName
+        impactMetrics:
+        - equivalenceValue: 6.027456183070403
+          unit: KG
+          metric: CO2
+          value: 0.8008281904610115
+          equivalenceUnit: BAGS
+        - equivalenceValue: 6.027456183070403
+          unit: KG
+          metric: CO2
+          value: 0.8008281904610115
+          equivalenceUnit: BAGS
+        sustainableDevelopmentGoals:
+        - 3
+        - 3
+      properties:
+        fundInfo:
+          $ref: '#/components/schemas/FundInfo'
+        impactMetrics:
+          description: Calculated impact in different areas
+          items:
+            $ref: '#/components/schemas/Impact'
+          type: array
+        sustainableDevelopmentGoals:
+          description: List of Sustainable Development Goals this fund contributes
+            to.
+          items:
+            description: Sustainable Development Goal
+            maximum: 17
+            minimum: 1
+            type: integer
+          type: array
+        sdgs:
+          $ref: '#/components/schemas/Sdgs'
+        tiles:
+          description: List of tiles, containing wording for either metrics, extra
+            explanation, or error messages
+          items:
+            $ref: '#/components/schemas/ImpactValues_tiles'
+          type: array
+      type: object
+    Sdgs:
+      description: Sustainable development goals data
+      example:
+        explanationLinkUrl: explanationLinkUrl
+        items:
+        - 10
+        - 10
+      properties:
+        items:
+          description: List of Sustainable Development Goals this fund contributes
+            to.
+          items:
+            description: Sustainable Development Goal
+            maximum: 17
+            minimum: 1
+            type: integer
+          type: array
+        explanationLinkUrl:
+          description: Link URL information about sustainable development goals
+          type: string
+      type: object
+    FundInfo:
+      description: Basic information of a fund
+      example:
+        fundID: fundID
+        fundName: fundName
+      properties:
+        fundID:
+          description: Identifier of the fund
+          type: string
+        fundName:
+          description: Full name of the fund
+          type: string
+      type: object
+    SavingsImpactResponse:
+      description: Impact made by user by having money in their savings account
+      example:
+        tiles:
+        - templateID: METRIC_WORDING_WITHOUT_EQUIVALENCE
+          content:
+            measurementEquivalence: measurementEquivalence
+            measurementDescription: measurementDescription
+            measurementIcon:
+              pdf: pdf
+              svg: svg
+              png: png
+            measurement: measurement
+        - templateID: METRIC_WORDING_WITHOUT_EQUIVALENCE
+          content:
+            measurementEquivalence: measurementEquivalence
+            measurementDescription: measurementDescription
+            measurementIcon:
+              pdf: pdf
+              svg: svg
+              png: png
+            measurement: measurement
+        dataSource: dataSource
+        impactMetrics:
+        - equivalenceValue: 6.027456183070403
+          unit: KG
+          metric: CO2
+          value: 0.8008281904610115
+          equivalenceUnit: BAGS
+        - equivalenceValue: 6.027456183070403
+          unit: KG
+          metric: CO2
+          value: 0.8008281904610115
+          equivalenceUnit: BAGS
+      properties:
+        impactMetrics:
+          description: Calculated impact in different areas
+          items:
+            $ref: '#/components/schemas/Impact'
+          type: array
+        tiles:
+          description: List of tiles, containing wording for either metrics, extra
+            explanation, or error messages
+          items:
+            $ref: '#/components/schemas/ImpactValues_tiles'
+          type: array
+        dataSource:
+          description: Describes the data source used to obtain this data
+          type: string
+      type: object
+    Impact:
+      description: Single type of impact made by user
+      example:
+        equivalenceValue: 6.027456183070403
+        unit: KG
+        metric: CO2
+        value: 0.8008281904610115
+        equivalenceUnit: BAGS
+      properties:
+        metric:
+          description: Type of impact considered (CO2 reduction, waste, etc)
+          enum:
+          - CO2
+          - WASTE
+          - WATER
+          - MEALS
+          - GREEN_ENERGY
+          - MFI_LOANS
+          - MFI_SAVERS
+          - CULTURAL_VISITORS
+          - PERSONS_EDUCATED
+          - SUSTAINABLE_PROPERTY
+          type: string
+          x-frozen: true
+        unit:
+          description: The unit in which the impact is measured
+          enum:
+          - KG
+          - LITER
+          - KWH
+          - SQUARE_METRE
+          - QUANTITY
+          - TON
+          - KILOTON
+          - HECTOLITER
+          - CUBIC_METRE
+          - MWH
+          - GWH
+          type: string
+          x-frozen: true
+        value:
+          description: The amount of impact made by investing in this fund
+          type: number
+        equivalenceUnit:
+          description: Equivalent, more real-world, unit in which the impact is measured
+          enum:
+          - BAGS
+          - SHOWER_SESSIONS
+          - KM_OF_DRIVING
+          - HOUSEHOLDS
+          type: string
+          x-frozen: true
+        equivalenceValue:
+          description: The impact made in terms of the equivalenceUnit
+          type: number
+      type: object
+    Error:
+      description: Details of an error.
+      properties:
+        title:
+          description: The title of an error message is a title that belongs to a
+            localised error message.
+          type: string
+        message:
+          description: An error message which gives the user a localised description
+            of the error.
+          type: string
+        code:
+          description: An error code, that is, a technical code allowing the client-software
+            to adapt its behaviour accordingly.
+          enum:
+          - AUTH_FAILED
+          - SIGNING_REQUIRED
+          - SIGNING_FAILED
+          - BIOMETRIC_AUTH_DISABLED
+          - BLOCKED
+          - BLOCKING_ERROR
+          - CLIENT_OUTDATED
+          - GENERAL
+          - INVALID_SIGNATURE
+          - MISSING_REQUEST_HEADERS
+          - SESSION_EXPIRED
+          - TEMPORARILY_UNAVAILABLE
+          - REDIRECT
+          - VALIDATION
+          type: string
+          x-frozen: true
+        url:
+          description: URL pointing to more info about, or a solution to, this error
+          format: uri
+          type: string
+      required:
+      - message
+      title: Error
+      type: object
+    ImpactValues_content_measurementIcon:
+      description: A link to the icon for the metric on the assetserver for each available
+        image type
+      example:
+        pdf: pdf
+        svg: svg
+        png: png
+      properties:
+        pdf:
+          description: a link to the pdf icon for the metric
+          type: string
+        png:
+          description: a link to the png icon for the metric
+          type: string
+        svg:
+          description: a link to the svg icon for the metric
+          type: string
+      type: object
+    ImpactValues_content:
+      description: Wordings of an impact metric
+      example:
+        measurementEquivalence: measurementEquivalence
+        measurementDescription: measurementDescription
+        measurementIcon:
+          pdf: pdf
+          svg: svg
+          png: png
+        measurement: measurement
+      properties:
+        measurement:
+          description: A text containing the main value and its unit
+          type: string
+        measurementDescription:
+          description: A text containing a description about the main value
+          type: string
+        measurementEquivalence:
+          description: A text containing everything about the equivalence metric if
+            it exists
+          type: string
+        measurementIcon:
+          $ref: '#/components/schemas/ImpactValues_content_measurementIcon'
+      required:
+      - measurement
+      - measurementDescription
+      - measurementIcon
+      type: object
+    ImpactValues_tiles:
+      description: An object containing information for a tile relating to investments
+        impact in the app
+      example:
+        templateID: METRIC_WORDING_WITHOUT_EQUIVALENCE
+        content:
+          measurementEquivalence: measurementEquivalence
+          measurementDescription: measurementDescription
+          measurementIcon:
+            pdf: pdf
+            svg: svg
+            png: png
+          measurement: measurement
+      properties:
+        templateID:
+          description: An ID identifying the template
+          enum:
+          - METRIC_WORDING_WITHOUT_EQUIVALENCE
+          - METRIC_WORDING_WITH_EQUIVALENCE
+          - EXPLANATION
+          - INSUFFICIENT_SHARES
+          - SAAT
+          - ERROR
+          type: string
+          x-frozen: true
+        content:
+          $ref: '#/components/schemas/ImpactValues_content'
+      required:
+      - content
+      - templateID
+      type: object
